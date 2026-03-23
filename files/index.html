@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Farm Project — Form 1 of 3: Who & What</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --soil: #3d2b1f;
+    --bark: #6b4226;
+    --leaf: #2d6a4f;
+    --sprout: #52b788;
+    --sun: #f4a261;
+    --cream: #fdf6ec;
+    --fog: #f0ebe3;
+    --ink: #1a1209;
+    --muted: #7a6a57;
+    --border: #d6c9b5;
+    --radius: 10px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+    padding: 0 0 60px;
+  }
+  .hero {
+    background: var(--leaf);
+    background-image: linear-gradient(135deg, var(--soil) 0%, var(--leaf) 60%, #40916c 100%);
+    color: white;
+    padding: 40px 24px 36px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 20% 80%, rgba(82,183,136,0.3) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 20%, rgba(244,162,97,0.2) 0%, transparent 40%);
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 5px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(24px, 6vw, 38px);
+    line-height: 1.2;
+    margin-bottom: 10px;
+    position: relative;
+  }
+  .hero p {
+    font-size: 14px;
+    opacity: 0.85;
+    max-width: 400px;
+    margin: 0 auto;
+    position: relative;
+    line-height: 1.6;
+  }
+  .progress-bar {
+    background: rgba(255,255,255,0.15);
+    border-radius: 20px;
+    height: 6px;
+    margin: 20px auto 0;
+    max-width: 200px;
+    position: relative;
+  }
+  .progress-fill {
+    background: var(--sun);
+    border-radius: 20px;
+    height: 100%;
+    width: 33%;
+  }
+  .progress-label {
+    font-size: 11px;
+    opacity: 0.7;
+    margin-top: 6px;
+    position: relative;
+  }
+  .container { max-width: 680px; margin: 0 auto; padding: 0 16px; }
+  .respondent-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin: 24px 0 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .respondent-card .full { grid-column: 1/-1; }
+  .section {
+    margin-top: 28px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .section-header {
+    background: var(--fog);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 20px;
+  }
+  .section-number {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--leaf);
+    margin-bottom: 4px;
+  }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: var(--soil);
+  }
+  .section-desc {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+  .section-body { padding: 20px; display: flex; flex-direction: column; gap: 18px; }
+  .field-group { display: flex; flex-direction: column; gap: 6px; }
+  .field-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--soil);
+    line-height: 1.4;
+  }
+  .field-num {
+    color: var(--sprout);
+    font-size: 11px;
+    font-weight: 700;
+    margin-right: 4px;
+  }
+  .field-hint { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  input[type="text"], input[type="date"], textarea, select {
+    width: 100%;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--ink);
+    background: var(--cream);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    -webkit-appearance: none;
+  }
+  input:focus, textarea:focus, select:focus {
+    border-color: var(--sprout);
+    box-shadow: 0 0 0 3px rgba(82,183,136,0.15);
+    background: white;
+  }
+  textarea { min-height: 90px; resize: vertical; line-height: 1.6; }
+  .radio-group, .check-group {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px;
+  }
+  .radio-option, .check-option {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--fog);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 9px 14px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.15s;
+    user-select: none;
+  }
+  .radio-option:hover, .check-option:hover {
+    border-color: var(--sprout);
+    background: #edf7f2;
+  }
+  .radio-option input, .check-option input { accent-color: var(--leaf); width: 15px; height: 15px; }
+  .inline-row { display: flex; gap: 12px; align-items: flex-start; flex-wrap: wrap; }
+  .inline-row > * { flex: 1; min-width: 140px; }
+  .partner-block {
+    background: var(--fog);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .partner-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--bark);
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .divider {
+    border: none;
+    border-top: 1px dashed var(--border);
+    margin: 4px 0;
+  }
+  .info-note {
+    background: #edf7f2;
+    border-left: 3px solid var(--sprout);
+    border-radius: 0 8px 8px 0;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--leaf);
+    line-height: 1.5;
+  }
+  .submit-area {
+    margin-top: 32px;
+    text-align: center;
+    padding: 0 16px;
+  }
+  .btn-submit {
+    background: var(--leaf);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 16px 48px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    width: 100%;
+    max-width: 360px;
+  }
+  .btn-submit:hover { background: #1e5c3e; }
+  .btn-submit:active { transform: scale(0.98); }
+  .next-note {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 12px;
+  }
+  .footer {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    padding: 0 16px;
+  }
+  @media (max-width: 480px) {
+    .respondent-card { grid-template-columns: 1fr; }
+    .radio-option, .check-option { font-size: 13px; padding: 8px 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">🌱 Farm Project</div>
+  <h1>Who & What</h1>
+  <p>Section 1 of 3 — Project overview, partners, and financial structure</p>
+  <div class="progress-bar"><div class="progress-fill"></div></div>
+  <p class="progress-label">Form 1 of 3 · ~15 minutes</p>
+</div>
+
+<div class="container">
+<form action="https://formspree.io/f/meerbbjz" method="POST">
+  <!-- Respondent Info -->
+  <div class="respondent-card">
+    <div class="full">
+      <div class="field-group">
+        <label class="field-label">Your Full Name</label>
+        <input type="text" placeholder="Enter your name">
+      </div>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Your Role in This Project</label>
+      <input type="text" placeholder="e.g. Site Manager, Investor">
+    </div>
+    <div class="field-group">
+      <label class="field-label">Date Completed</label>
+      <input type="date">
+    </div>
+  </div>
+
+  <!-- SECTION 1 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">Section 1</div>
+      <div class="section-title">Project Overview & Identity</div>
+      <div class="section-desc">The big picture — what this farm is, where it is, and how long it has been running.</div>
+    </div>
+    <div class="section-body">
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">1.1</span>Official or working name of this project / farm</label>
+        <input type="text" placeholder="e.g. Zvimba Farm Project">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">1.2</span>Physical location / address of the farm</label>
+        <input type="text" placeholder="Village, district, province">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">1.3</span>Total land area</label>
+        <input type="text" placeholder="e.g. 5 hectares or 12 acres">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">1.4</span>Does the farm have a registered business name or entity?</label>
+        <div class="radio-group">
+          <label class="radio-option"><input type="radio" name="q14" value="yes"> Yes</label>
+          <label class="radio-option"><input type="radio" name="q14" value="no"> No</label>
+        </div>
+        <div class="field-hint">If Yes, what is the name?</div>
+        <input type="text" placeholder="Registered name (if any)">
+      </div>
+
+      <div class="inline-row">
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">1.5</span>When did this project start?</label>
+          <input type="text" placeholder="Month & year (e.g. March 2023)">
+        </div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">1.6</span>Expected end date or duration</label>
+          <input type="text" placeholder="e.g. Ongoing / Dec 2026">
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">1.7</span>What is the primary goal of this project?</label>
+        <div class="radio-group">
+          <label class="radio-option"><input type="radio" name="q17" value="profit"> Make profit</label>
+          <label class="radio-option"><input type="radio" name="q17" value="food"> Food security</label>
+          <label class="radio-option"><input type="radio" name="q17" value="both"> Both</label>
+          <label class="radio-option"><input type="radio" name="q17" value="other"> Other</label>
+        </div>
+        <input type="text" placeholder="Explain further if needed">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">1.8</span>Are there seasonal growing cycles or is it year-round?</label>
+        <div class="radio-group">
+          <label class="radio-option"><input type="radio" name="q18" value="seasonal"> Seasonal only</label>
+          <label class="radio-option"><input type="radio" name="q18" value="yearround"> Year-round</label>
+          <label class="radio-option"><input type="radio" name="q18" value="mixed"> Both / depends on crop</label>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">1.9</span>Briefly describe what the farm produces and its overall vision</label>
+        <textarea placeholder="List the crops grown and describe what the farm is trying to achieve in the long term..."></textarea>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">Section 2</div>
+      <div class="section-title">Stakeholders, Partners & Roles</div>
+      <div class="section-desc">Everyone involved — what they do, what they put in, and what authority they hold.</div>
+    </div>
+    <div class="section-body">
+
+      <div class="info-note">Fill in one block per partner. If there are more than 4 people, add their details in Section 15 (Open Notes) at the end of Form 3.</div>
+
+      <!-- Person 1 -->
+      <div class="partner-block">
+        <div class="partner-label">👤 Person 1</div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">2.1.1</span>Full name</label>
+          <input type="text" placeholder="Full name">
+        </div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">2.1.2</span>Role / title in this project</label>
+          <input type="text" placeholder="e.g. Site Manager, Investor">
+        </div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">2.1.3</span>Type of involvement</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="p1type" value="investor"> Investor</label>
+            <label class="radio-option"><input type="radio" name="p1type" value="operator"> Operator</label>
+            <label class="radio-option"><input type="radio" name="p1type" value="both"> Both</label>
+            <label class="radio-option"><input type="radio" name="p1type" value="other"> Other</label>
+          </div>
+        </div>
+        <div class="inline-row">
+          <div class="field-group">
+            <label class="field-label"><span class="field-num">2.1.4</span>Amount invested / contributed</label>
+            <input type="text" placeholder="e.g. $500 / land / labour">
+          </div>
+          <div class="field-group">
+            <label class="field-label"><span class="field-num">2.1.5</span>Profit-share %</label>
+            <input type="text" placeholder="e.g. 33%">
+          </div>
+        </div>
+        <div class="inline-row">
+          <div class="field-group">
+            <label class="field-label"><span class="field-num">2.1.6</span>Phone / contact</label>
+            <input type="text" placeholder="Phone number">
+          </div>
+          <div class="field-group">
+            <label class="field-label"><span class="field-num">2.1.7</span>Location</label>
+            <div class="radio-group">
+              <label class="radio-option"><input type="radio" name="p1loc" value="onsite"> On-site</label>
+              <label class="radio-option"><input type="radio" name="p1loc" value="offsite"> Off-site</label>
+            </div>
+          </div>
+        </div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">2.1.8</span>Decisions this person can make alone</label>
+          <textarea placeholder="e.g. Hire casual workers, buy inputs under $50..."></textarea>
+        </div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">2.1.9</span>Decisions that require group approval</label>
+          <textarea placeholder="e.g. Large purchases, changing crops, distributing profits..."></textarea>
+        </div>
+      </div>
+
+      <!-- Person 2 -->
+      <div class="partner-block">
+        <div class="partner-label">👤 Person 2</div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">2.2.1</span>Full name</label>
+          <input type="text" placeholder="Full name">
+        </div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">2.2.2</span>Role / title in this project</label>
+          <input type="text" placeholder="e.g. Investor, Co-founder">
+        </div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">2.2.3</span>Type of involvement</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="p2type" value="investor"> Investor</label>
+            <label class="radio-option"><input type="radio" name="p2type" value="operator"> Operator</label>
+            <label class="radio-option"><input type="radio" name="p2type" value="both"> Both</label>
+            <label class="radio-option"><input type="radio" name="p2type" value="other"> Other</label>
+          </div>
+        </div>
+        <div class="inline-row">
+          <div class="field-group">
+            <label class="field-label"><span class="field-num">2.2.4</span>Amount invested / contributed</label>
+            <input type="text" placeholder="e.g. $500 / land / labour">
+          </div>
+          <div class="field-group">
+            <label class="field-label"><span class="field-num">2.2.5</span>Profit-share %</label>
+            <input type="text" placeholder="e.g. 33%">
+          </div>
+        </div>
+        <div class="inline-row">
+          <div class="field-group">
+            <label class="field-label"><span class="field-num">2.2.6</span>Phone / contact</label>
+            <input type="text" placeholder="Phone number">
+          </div>
+          <div class="field-group">
+            <label class="field-label"><span class="field-num">2.2.7</span>Location</label>
+            <div class="radio-group">
+              <label class="radio-option"><input type="radio" name="p2loc" value="onsite"> On-site</label>
+              <label class="radio-option"><input type="radio" name="p2loc" value="offsite"> Off-site</label>
+            </div>
+          </div>
+        </div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">2.2.8</span>Decisions this person can make alone</label>
+          <textarea placeholder="What can this person decide without consulting the others?"></textarea>
+        </div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">2.2.9</span>Decisions that require group approval</label>
+          <textarea placeholder="What requires everyone to agree?"></textarea>
+        </div>
+      </div>
+
+      <!-- Person 3 -->
+      <div class="partner-block">
+        <div class="partner-label">👤 Person 3</div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">2.3.1</span>Full name</label>
+          <input type="text" placeholder="Full name">
+        </div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">2.3.2</span>Role / title in this project</label>
+          <input type="text" placeholder="e.g. Investor, Co-founder">
+        </div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">2.3.3</span>Type of involvement</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="p3type" value="investor"> Investor</label>
+            <label class="radio-option"><input type="radio" name="p3type" value="operator"> Operator</label>
+            <label class="radio-option"><input type="radio" name="p3type" value="both"> Both</label>
+            <label class="radio-option"><input type="radio" name="p3type" value="other"> Other</label>
+          </div>
+        </div>
+        <div class="inline-row">
+          <div class="field-group">
+            <label class="field-label"><span class="field-num">2.3.4</span>Amount invested / contributed</label>
+            <input type="text" placeholder="e.g. $500 / land / labour">
+          </div>
+          <div class="field-group">
+            <label class="field-label"><span class="field-num">2.3.5</span>Profit-share %</label>
+            <input type="text" placeholder="e.g. 33%">
+          </div>
+        </div>
+        <div class="inline-row">
+          <div class="field-group">
+            <label class="field-label"><span class="field-num">2.3.6</span>Phone / contact</label>
+            <input type="text" placeholder="Phone number">
+          </div>
+          <div class="field-group">
+            <label class="field-label"><span class="field-num">2.3.7</span>Location</label>
+            <div class="radio-group">
+              <label class="radio-option"><input type="radio" name="p3loc" value="onsite"> On-site</label>
+              <label class="radio-option"><input type="radio" name="p3loc" value="offsite"> Off-site</label>
+            </div>
+          </div>
+        </div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">2.3.8</span>Decisions this person can make alone</label>
+          <textarea placeholder="What can this person decide without consulting the others?"></textarea>
+        </div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">2.3.9</span>Decisions that require group approval</label>
+          <textarea placeholder="What requires everyone to agree?"></textarea>
+        </div>
+      </div>
+
+      <!-- Person 4 -->
+      <div class="partner-block">
+        <div class="partner-label">👤 Person 4</div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">2.4.1</span>Full name</label>
+          <input type="text" placeholder="Full name">
+        </div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">2.4.2</span>Role / title in this project</label>
+          <input type="text" placeholder="e.g. Investor, Overseer">
+        </div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">2.4.3</span>Type of involvement</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="p4type" value="investor"> Investor</label>
+            <label class="radio-option"><input type="radio" name="p4type" value="operator"> Operator</label>
+            <label class="radio-option"><input type="radio" name="p4type" value="both"> Both</label>
+            <label class="radio-option"><input type="radio" name="p4type" value="other"> Other</label>
+          </div>
+        </div>
+        <div class="inline-row">
+          <div class="field-group">
+            <label class="field-label"><span class="field-num">2.4.4</span>Amount invested / contributed</label>
+            <input type="text" placeholder="e.g. $500 / land / labour">
+          </div>
+          <div class="field-group">
+            <label class="field-label"><span class="field-num">2.4.5</span>Profit-share %</label>
+            <input type="text" placeholder="e.g. 33%">
+          </div>
+        </div>
+        <div class="inline-row">
+          <div class="field-group">
+            <label class="field-label"><span class="field-num">2.4.6</span>Phone / contact</label>
+            <input type="text" placeholder="Phone number">
+          </div>
+          <div class="field-group">
+            <label class="field-label"><span class="field-num">2.4.7</span>Location</label>
+            <div class="radio-group">
+              <label class="radio-option"><input type="radio" name="p4loc" value="onsite"> On-site</label>
+              <label class="radio-option"><input type="radio" name="p4loc" value="offsite"> Off-site</label>
+            </div>
+          </div>
+        </div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">2.4.8</span>Decisions this person can make alone</label>
+          <textarea placeholder="What can this person decide without consulting the others?"></textarea>
+        </div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">2.4.9</span>Decisions that require group approval</label>
+          <textarea placeholder="What requires everyone to agree?"></textarea>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">2.5</span>Describe in your own words who is in charge of what, and how decisions get made when partners disagree</label>
+        <textarea placeholder="e.g. The site manager decides day-to-day. Big money decisions need all investors to agree. If we disagree, the majority wins..."></textarea>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION 3 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">Section 3</div>
+      <div class="section-title">Financial Structure & Investment</div>
+      <div class="section-desc">How money goes in, how it is tracked, and how profits are shared.</div>
+    </div>
+    <div class="section-body">
+
+      <div class="inline-row">
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">3.1</span>Total capital invested so far (all partners)</label>
+          <input type="text" placeholder="e.g. USD $2,000 / ZWL 50,000">
+        </div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">3.2</span>Currency used for accounting</label>
+          <input type="text" placeholder="e.g. USD, ZWL, both">
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">3.3</span>Is there a formal agreement / contract signed by all partners?</label>
+        <div class="radio-group">
+          <label class="radio-option"><input type="radio" name="q33" value="yes"> Yes</label>
+          <label class="radio-option"><input type="radio" name="q33" value="no"> No — verbal only</label>
+          <label class="radio-option"><input type="radio" name="q33" value="inprogress"> In progress</label>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">3.4</span>Where is the partnership agreement stored?</label>
+        <input type="text" placeholder="e.g. Paper copy with Partner X / WhatsApp message / not written">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">3.5</span>Is there a dedicated bank account for this project?</label>
+        <div class="radio-group">
+          <label class="radio-option"><input type="radio" name="q35" value="yes"> Yes</label>
+          <label class="radio-option"><input type="radio" name="q35" value="no"> No</label>
+        </div>
+        <input type="text" placeholder="If Yes, which bank?">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">3.6</span>Who controls / has access to the project bank account?</label>
+        <input type="text" placeholder="Name(s) of people with access">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">3.7</span>Who approves large expenditures, and above what amount?</label>
+        <input type="text" placeholder="e.g. Any expense above $100 needs all partners to agree">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">3.8</span>How often do partners receive financial reports?</label>
+        <div class="radio-group">
+          <label class="radio-option"><input type="radio" name="q38" value="weekly"> Weekly</label>
+          <label class="radio-option"><input type="radio" name="q38" value="monthly"> Monthly</label>
+          <label class="radio-option"><input type="radio" name="q38" value="harvest"> Per harvest</label>
+          <label class="radio-option"><input type="radio" name="q38" value="never"> Never / as asked</label>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">3.9</span>How are profits distributed?</label>
+        <input type="text" placeholder="e.g. Equal 3-way split / proportional to investment / other">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">3.10</span>Are profits distributed after each harvest or annually?</label>
+        <div class="radio-group">
+          <label class="radio-option"><input type="radio" name="q310" value="harvest"> After each harvest</label>
+          <label class="radio-option"><input type="radio" name="q310" value="annual"> Annually</label>
+          <label class="radio-option"><input type="radio" name="q310" value="other"> Other</label>
+        </div>
+        <input type="text" placeholder="Explain if other">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">3.11</span>Who is responsible for paying farm workers / suppliers?</label>
+        <input type="text" placeholder="Name or role of the person who makes payments">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">3.12</span>Is there a retained earnings / reinvestment fund?</label>
+        <div class="radio-group">
+          <label class="radio-option"><input type="radio" name="q312" value="yes"> Yes</label>
+          <label class="radio-option"><input type="radio" name="q312" value="no"> No</label>
+        </div>
+        <input type="text" placeholder="If Yes, what percentage is kept back?">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">3.13</span>How are unexpected costs (e.g. crop failure, equipment breakdown) handled?</label>
+        <textarea placeholder="e.g. Each partner tops up equally / draw from reserves / take a loan..."></textarea>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">3.14</span>Does any partner charge a management fee?</label>
+        <div class="radio-group">
+          <label class="radio-option"><input type="radio" name="q314" value="yes"> Yes</label>
+          <label class="radio-option"><input type="radio" name="q314" value="no"> No</label>
+        </div>
+        <input type="text" placeholder="If Yes, who and how much?">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">3.15</span>Describe the full profit-sharing arrangement in as much detail as possible</label>
+        <div class="field-hint">Include: what deductions come first, at what frequency profits are paid out, and how disputes over money are settled.</div>
+        <textarea style="min-height:120px" placeholder="e.g. After every harvest, we first subtract all expenses. From the remaining profit, 10% goes back into the farm fund. The rest is split: 40% to Investor A, 40% to Investor B, 20% to the site manager as his share and payment for labour..."></textarea>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="submit-area">
+    <button class="btn-submit" onclick="handleSubmit()">Save My Answers — Form 1 ✓</button>
+    <p class="next-note">After saving, Sean will send you <strong>Form 2</strong> which covers the farm itself — crops, land, workers, and planting.</p>
+  </div>
+
+  <div class="footer">
+    🌾 Farm Project Management System · Form 1 of 3<br>
+    Your answers are used only to build a better management system for everyone.
+  </div>
+</form>
+</div>
+
+<script>
+function handleSubmit() {
+  const inputs = document.querySelectorAll('input[type="text"], input[type="date"], textarea');
+  let filled = 0;
+  inputs.forEach(i => { if (i.value.trim()) filled++; });
+  const pct = Math.round((filled / inputs.length) * 100);
+  if (pct < 30) {
+    alert('Please fill in more answers before saving. Try to answer as many questions as you can.');
+    return;
+  }
+  const btn = document.querySelector('.btn-submit');
+  btn.textContent = '✅ Answers Saved! Send this to Sean.';
+  btn.style.background = '#2d6a4f';
+  btn.disabled = true;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // In a real deployment this would POST to a server
+  console.log('Form 1 submitted. ' + pct + '% filled.');
+}
+</script>
+</body>
+</html>

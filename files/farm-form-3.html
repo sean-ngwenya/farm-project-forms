@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Farm Project — Form 3 of 3: Business Operations</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --soil: #3d2b1f;
+    --bark: #6b4226;
+    --leaf: #2d6a4f;
+    --sprout: #52b788;
+    --sun: #f4a261;
+    --cream: #fdf6ec;
+    --fog: #f0ebe3;
+    --ink: #1a1209;
+    --muted: #7a6a57;
+    --border: #d6c9b5;
+    --radius: 10px;
+    --hero: #1a3a2a;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); min-height: 100vh; padding: 0 0 60px; }
+  .hero {
+    background: linear-gradient(135deg, var(--hero) 0%, var(--leaf) 60%, #40916c 100%);
+    color: white; padding: 40px 24px 36px; text-align: center; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: radial-gradient(circle at 80% 20%, rgba(244,162,97,0.2) 0%, transparent 40%),
+                      radial-gradient(circle at 20% 80%, rgba(82,183,136,0.2) 0%, transparent 50%);
+  }
+  .hero-badge { display: inline-block; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); border-radius: 20px; padding: 5px 16px; font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 16px; position: relative; }
+  .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(24px, 6vw, 38px); line-height: 1.2; margin-bottom: 10px; position: relative; }
+  .hero p { font-size: 14px; opacity: 0.85; max-width: 400px; margin: 0 auto; position: relative; line-height: 1.6; }
+  .progress-bar { background: rgba(255,255,255,0.15); border-radius: 20px; height: 6px; margin: 20px auto 0; max-width: 200px; position: relative; }
+  .progress-fill { background: var(--sun); border-radius: 20px; height: 100%; width: 100%; }
+  .progress-label { font-size: 11px; opacity: 0.7; margin-top: 6px; position: relative; }
+  .container { max-width: 680px; margin: 0 auto; padding: 0 16px; }
+  .respondent-card { background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin: 24px 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .respondent-card .full { grid-column: 1/-1; }
+  .section { margin-top: 28px; background: white; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .section-header { background: var(--fog); border-bottom: 1px solid var(--border); padding: 16px 20px; }
+  .section-number { font-size: 11px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; color: var(--leaf); margin-bottom: 4px; }
+  .section-title { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--soil); }
+  .section-desc { font-size: 13px; color: var(--muted); margin-top: 4px; line-height: 1.5; }
+  .section-body { padding: 20px; display: flex; flex-direction: column; gap: 18px; }
+  .field-group { display: flex; flex-direction: column; gap: 6px; }
+  .field-label { font-size: 13px; font-weight: 600; color: var(--soil); line-height: 1.4; }
+  .field-num { color: var(--sprout); font-size: 11px; font-weight: 700; margin-right: 4px; }
+  .field-hint { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  input[type="text"], input[type="date"], textarea, select {
+    width: 100%; border: 1.5px solid var(--border); border-radius: 8px; padding: 10px 14px;
+    font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--ink); background: var(--cream);
+    transition: border-color 0.2s, box-shadow 0.2s; outline: none; -webkit-appearance: none;
+  }
+  input:focus, textarea:focus, select:focus { border-color: var(--sprout); box-shadow: 0 0 0 3px rgba(82,183,136,0.15); background: white; }
+  textarea { min-height: 90px; resize: vertical; line-height: 1.6; }
+  .radio-group, .check-group { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+  .radio-option, .check-option { display: flex; align-items: center; gap: 8px; background: var(--fog); border: 1.5px solid var(--border); border-radius: 8px; padding: 9px 14px; cursor: pointer; font-size: 14px; transition: all 0.15s; user-select: none; }
+  .radio-option:hover, .check-option:hover { border-color: var(--sprout); background: #edf7f2; }
+  .radio-option input, .check-option input { accent-color: var(--leaf); width: 15px; height: 15px; }
+  .inline-row { display: flex; gap: 12px; align-items: flex-start; flex-wrap: wrap; }
+  .inline-row > * { flex: 1; min-width: 140px; }
+  .info-note { background: #edf7f2; border-left: 3px solid var(--sprout); border-radius: 0 8px 8px 0; padding: 10px 14px; font-size: 13px; color: var(--leaf); line-height: 1.5; }
+  .info-note.amber { background: #fff8ee; border-color: var(--sun); color: #8a5a1e; }
+  .calendar-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .calendar-table th { background: var(--leaf); color: white; padding: 8px 6px; text-align: center; font-weight: 600; font-size: 11px; }
+  .calendar-table th:first-child { text-align: left; }
+  .calendar-table td { padding: 4px 3px; border-bottom: 1px solid var(--fog); }
+  .calendar-table td:first-child { font-weight: 600; font-size: 11px; color: var(--muted); padding-left: 6px; white-space: nowrap; }
+  .calendar-table input { border-radius: 5px; padding: 5px 4px; font-size: 12px; text-align: center; }
+  .submit-area { margin-top: 32px; text-align: center; padding: 0 16px; }
+  .btn-submit { background: linear-gradient(135deg, var(--leaf) 0%, #40916c 100%); color: white; border: none; border-radius: 10px; padding: 18px 48px; font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 600; cursor: pointer; transition: opacity 0.2s, transform 0.1s; width: 100%; max-width: 360px; }
+  .btn-submit:hover { opacity: 0.9; }
+  .btn-submit:active { transform: scale(0.98); }
+  .done-note { font-size: 13px; color: var(--muted); margin-top: 12px; line-height: 1.5; }
+  .thankyou-box { background: var(--leaf); color: white; border-radius: var(--radius); padding: 24px 20px; text-align: center; margin-top: 28px; }
+  .thankyou-box h2 { font-family: 'DM Serif Display', serif; font-size: 22px; margin-bottom: 8px; }
+  .thankyou-box p { font-size: 14px; opacity: 0.85; line-height: 1.6; }
+  .footer { margin-top: 20px; text-align: center; font-size: 12px; color: var(--muted); padding: 0 16px; }
+  @media (max-width: 480px) { .respondent-card { grid-template-columns: 1fr; } .calendar-table { font-size: 11px; } }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">🌾 Farm Project</div>
+  <h1>Business Operations</h1>
+  <p>Form 3 of 3 — Harvest, sales, records, risks, and the system you want built</p>
+  <div class="progress-bar"><div class="progress-fill"></div></div>
+  <p class="progress-label">Form 3 of 3 · ~20 minutes · Last one!</p>
+</div>
+
+<div class="container">
+
+  <form action="https://formspree.io/f/meerbbjz" method="POST">
+    <input type="hidden" name="_next" value="https://sean-ngwenya.github.io/farm-project-forms/index.html">
+
+  <div class="respondent-card">
+    <div class="full">
+      <div class="field-group">
+        <label class="field-label">Your Full Name</label>
+        <input type="text" name="r_name" placeholder="Enter your name" required>
+      </div>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Your Role</label>
+      <input type="text" name="r_role" placeholder="e.g. Site Manager" required>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Date Completed</label>
+      <input type="date" name="r_date">
+    </div>
+  </div>
+
+  <!-- SECTION 9 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">Section 9</div>
+      <div class="section-title">Harvest & Post-Harvest Handling</div>
+      <div class="section-desc">What happens from the moment a crop is harvested to when it leaves the farm.</div>
+    </div>
+    <div class="section-body">
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">9.1</span>How is the harvest carried out?</label>
+        <div class="radio-group">
+          <label class="radio-option"><input type="radio" name="q91" value="manual"> Manual only</label>
+          <label class="radio-option"><input type="radio" name="q91" value="mechanical"> Mechanical</label>
+          <label class="radio-option"><input type="radio" name="q91" value="both"> Both</label>
+        </div>
+      </div>
+
+      <div class="inline-row">
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">9.2</span>Who organises the harvest labour?</label>
+          <input type="text" name="q9_2_harvest_organiser" placeholder="Name or role">
+        </div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">9.3</span>How many workers are typically needed for harvest?</label>
+          <input type="text" name="q9_3_harvest_workers" placeholder="e.g. 15 people for 3 days">
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">9.4</span>How is the quantity harvested measured?</label>
+        <div class="radio-group">
+          <label class="radio-option"><input type="radio" name="q94" value="weight"> Weighed (kg)</label>
+          <label class="radio-option"><input type="radio" name="q94" value="bags"> Counted in bags</label>
+          <label class="radio-option"><input type="radio" name="q94" value="volume"> Volume / buckets</label>
+          <label class="radio-option"><input type="radio" name="q94" value="notmeasured"> Not measured</label>
+        </div>
+      </div>
+
+      <div class="inline-row">
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">9.5</span>Who records the harvest quantities?</label>
+          <input type="text" name="q9_5_harvest_recorder" placeholder="Name or role">
+        </div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">9.6</span>Where is the harvest stored after picking?</label>
+          <input type="text" name="q9_6_storage" placeholder="e.g. On-site shed / buyer's truck immediately">
+        </div>
+      </div>
+
+      <div class="inline-row">
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">9.7</span>What quality checks are done before sale?</label>
+          <input type="text" name="q9_7_quality_checks" placeholder="e.g. Sort by size, remove damaged ones">
+        </div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">9.8</span>Who grades or sorts the produce?</label>
+          <input type="text" name="q9_8_grader" placeholder="Name or role">
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">9.9</span>Are there any losses after harvest? How significant?</label>
+        <input type="text" name="q9_9_losses" placeholder="e.g. About 10% lost to rot in storage / very little loss">
+      </div>
+
+      <div class="inline-row">
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">9.10</span>How is produce transported from farm to buyer?</label>
+          <input type="text" name="q9_10_transport" placeholder="e.g. Buyer collects / we hire a truck">
+        </div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">9.11</span>Who organises / pays for transport?</label>
+          <input type="text" name="q9_11_transport_who" placeholder="Name or role">
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">9.12</span>How long after harvest does produce typically get sold?</label>
+        <input type="text" name="q9_12_sell_timing" placeholder="e.g. Within 1 week / immediately on the day / within a month">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">9.13</span>Describe what happens step by step on harvest day — who does what from start to finish</label>
+        <textarea name="q9_13_harvest_day" style="min-height:120px" placeholder="e.g. Step 1: Workers arrive at 6am and are given baskets/bags. Step 2: They dig potatoes and fill bags. Step 3: Supervisor counts and records bags. Step 4: Bags are stored in the shed. Step 5: The truck comes in the afternoon to collect..."></textarea>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION 10 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">Section 10</div>
+      <div class="section-title">Sales, Market & Revenue</div>
+      <div class="section-desc">How produce gets sold, who the buyers are, and how money flows back to the farm.</div>
+    </div>
+    <div class="section-body">
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">10.1</span>Who are the main buyers of the produce?</label>
+        <div class="check-group">
+          <label class="check-option"><input type="checkbox" name="q10_1_buyer_traders"> Market / street traders</label>
+          <label class="check-option"><input type="checkbox" name="q10_1_buyer_supermarkets"> Supermarkets</label>
+          <label class="check-option"><input type="checkbox" name="q10_1_buyer_public"> Direct to public</label>
+          <label class="check-option"><input type="checkbox" name="q10_1_buyer_wholesalers"> Wholesalers</label>
+          <label class="check-option"><input type="checkbox" name="q10_1_buyer_export"> Export</label>
+        </div>
+        <input type="text" name="q10_1_buyer_names" placeholder="Name specific regular buyers if you have them">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">10.2</span>How are buyers found or contacted?</label>
+        <input type="text" name="q10_2_buyer_contact" placeholder="e.g. They come to us / we call them at harvest time / regular relationship">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">10.3</span>Is there a fixed price or is price negotiated each season?</label>
+        <div class="radio-group">
+          <label class="radio-option"><input type="radio" name="q103" value="fixed"> Fixed price</label>
+          <label class="radio-option"><input type="radio" name="q103" value="negotiated"> Negotiated each time</label>
+          <label class="radio-option"><input type="radio" name="q103" value="market"> Market rate on the day</label>
+        </div>
+      </div>
+
+      <div class="inline-row">
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">10.4</span>Who negotiates and agrees the selling price?</label>
+          <input type="text" name="q10_4_price_negotiator" placeholder="Name or role">
+        </div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">10.5</span>Is produce sold all at once or gradually?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="q105" value="atonce"> All at once</label>
+            <label class="radio-option"><input type="radio" name="q105" value="gradual"> Gradually over time</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">10.6</span>How is payment received from buyers?</label>
+        <div class="check-group">
+          <label class="check-option"><input type="checkbox" name="q10_6_payment_cash"> Cash</label>
+          <label class="check-option"><input type="checkbox" name="q10_6_payment_mobile"> Mobile money (EcoCash)</label>
+          <label class="check-option"><input type="checkbox" name="q10_6_payment_bank"> Bank transfer</label>
+          <label class="check-option"><input type="checkbox" name="q10_6_payment_cheque"> Cheque</label>
+        </div>
+      </div>
+
+      <div class="inline-row">
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">10.7</span>Who collects or receives payment?</label>
+          <input type="text" name="q10_7_payment_receiver" placeholder="Name or role">
+        </div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">10.8</span>Is payment received immediately or after a delay?</label>
+          <input type="text" name="q10_8_payment_timing" placeholder="e.g. Cash on the day / 30 days after delivery">
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">10.9</span>Are sales receipts / invoices issued to buyers?</label>
+        <div class="radio-group">
+          <label class="radio-option"><input type="radio" name="q109" value="always"> Always</label>
+          <label class="radio-option"><input type="radio" name="q109" value="sometimes"> Sometimes</label>
+          <label class="radio-option"><input type="radio" name="q109" value="never"> Never</label>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">10.10</span>How are sales recorded?</label>
+        <div class="radio-group">
+          <label class="radio-option"><input type="radio" name="q1010" value="paper"> Paper book</label>
+          <label class="radio-option"><input type="radio" name="q1010" value="phone"> Phone / WhatsApp</label>
+          <label class="radio-option"><input type="radio" name="q1010" value="spreadsheet"> Spreadsheet</label>
+          <label class="radio-option"><input type="radio" name="q1010" value="none"> Not recorded</label>
+        </div>
+      </div>
+
+      <div class="inline-row">
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">10.11</span>Who records sales and how soon after?</label>
+          <input type="text" name="q10_11_sales_recorder" placeholder="e.g. Site manager writes it the same day">
+        </div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">10.12</span>How is revenue kept safe before distribution?</label>
+          <input type="text" name="q10_12_revenue_stored" placeholder="e.g. Kept in the bank / held by the site manager">
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">10.13</span>Are any crops sold under forward contracts or pre-agreements?</label>
+        <div class="radio-group">
+          <label class="radio-option"><input type="radio" name="q10_13_contracts" value="yes"> Yes</label>
+          <label class="radio-option"><input type="radio" name="q10_13_contracts" value="no"> No</label>
+        </div>
+        <input type="text" name="q10_13_contracts_detail" placeholder="If yes, explain the arrangement">
+      </div>
+
+      <div class="inline-row">
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">10.14</span>What is the typical revenue per season (estimate)?</label>
+          <input type="text" name="q10_14_revenue" placeholder="e.g. Around USD $800 / ZWL equivalent">
+        </div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">10.15</span>What % of produce is typically wasted or unsold?</label>
+          <input type="text" name="q10_15_waste" placeholder="e.g. About 5–10% / very little / quite a lot">
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION 11 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">Section 11</div>
+      <div class="section-title">Record Keeping, Reporting & Communication</div>
+      <div class="section-desc">What records exist now, who keeps them, and how partners stay informed.</div>
+    </div>
+    <div class="section-body">
+
+      <div class="info-note">⚠️ This section is critical — it tells us what the management system must capture and replace. Please answer as fully as you can.</div>
+
+      <div class="inline-row">
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">11.1</span>What financial records are currently kept?</label>
+          <input type="text" name="q11_1_financial_records" placeholder="e.g. Expense book, income notebook">
+        </div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">11.2</span>What operational records are kept?</label>
+          <input type="text" name="q11_2_operational_records" placeholder="e.g. Planting date, worker attendance, yield">
+        </div>
+      </div>
+
+      <div class="inline-row">
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">11.3</span>Who is responsible for record keeping?</label>
+          <input type="text" name="q11_3_records_who" placeholder="Name or role">
+        </div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">11.4</span>Where are records stored?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="q114" value="book"> Paper book</label>
+            <label class="radio-option"><input type="radio" name="q114" value="phone"> Phone</label>
+            <label class="radio-option"><input type="radio" name="q114" value="cloud"> Cloud / computer</label>
+            <label class="radio-option"><input type="radio" name="q114" value="nothing"> No records</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">11.5</span>How often are records updated?</label>
+        <div class="radio-group">
+          <label class="radio-option"><input type="radio" name="q115" value="daily"> Daily</label>
+          <label class="radio-option"><input type="radio" name="q115" value="weekly"> Weekly</label>
+          <label class="radio-option"><input type="radio" name="q115" value="event"> When something happens</label>
+          <label class="radio-option"><input type="radio" name="q115" value="rarely"> Rarely</label>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">11.6</span>Are records ever shared with all partners?</label>
+        <div class="radio-group">
+          <label class="radio-option"><input type="radio" name="q11_6_records_shared" value="yes"> Yes</label>
+          <label class="radio-option"><input type="radio" name="q11_6_records_shared" value="no"> No</label>
+        </div>
+        <input type="text" name="q11_6_records_shared_how" placeholder="If yes, how? (WhatsApp / meeting / email)">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">11.7</span>How do off-site partners (investors) currently get updates?</label>
+        <div class="check-group">
+          <label class="check-option"><input type="checkbox" name="q11_7_update_phone"> Phone calls</label>
+          <label class="check-option"><input type="checkbox" name="q11_7_update_whatsapp"> WhatsApp messages</label>
+          <label class="check-option"><input type="checkbox" name="q11_7_update_visits"> In-person visits</label>
+          <label class="check-option"><input type="checkbox" name="q11_7_update_none"> They don't get regular updates</label>
+        </div>
+      </div>
+
+      <div class="inline-row">
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">11.8</span>How often do all partners meet?</label>
+          <input type="text" name="q11_8_meeting_freq" placeholder="e.g. Monthly / only at harvest / whenever there is a problem">
+        </div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">11.9</span>Are notes taken during partner meetings?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="q119" value="yes"> Yes</label>
+            <label class="radio-option"><input type="radio" name="q119" value="no"> No</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="inline-row">
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">11.10</span>Is there a running expenses log?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="q11_10_expenses_log" value="yes"> Yes</label>
+            <label class="radio-option"><input type="radio" name="q11_10_expenses_log" value="no"> No</label>
+          </div>
+          <input type="text" name="q11_10_expenses_format" placeholder="If yes, what format?">
+        </div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">11.11</span>Are receipts and invoices filed or kept loosely?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="q1111" value="filed"> Properly filed</label>
+            <label class="radio-option"><input type="radio" name="q1111" value="loose"> Kept loosely</label>
+            <label class="radio-option"><input type="radio" name="q1111" value="none"> Not kept</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">11.12</span>Has there ever been a dispute over money or records?</label>
+        <div class="radio-group">
+          <label class="radio-option"><input type="radio" name="q1112" value="yes"> Yes</label>
+          <label class="radio-option"><input type="radio" name="q1112" value="no"> No</label>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">11.13</span>What records are most difficult to keep up with?</label>
+        <input type="text" name="q11_13_difficult_records" placeholder="e.g. Daily worker attendance / every small expense / what was applied to each field">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">11.14</span>What information do the investors most want to see regularly?</label>
+        <input type="text" name="q11_14_investor_info" placeholder="e.g. How much has been spent / how much was earned / profit per harvest">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">11.15</span>Describe the ideal report that investors should receive after every harvest season. What should it include?</label>
+        <textarea name="q11_15_ideal_report" style="min-height:110px" placeholder="e.g. Total harvest (bags/kg), total income from sales, all expenses broken down, profit, each partner's share, what is left in the farm fund, any problems..."></textarea>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION 12 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">Section 12</div>
+      <div class="section-title">Risk, Insurance & Compliance</div>
+      <div class="section-desc">What protections are in place and what could go wrong.</div>
+    </div>
+    <div class="section-body">
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">12.1</span>Does the farm have any insurance?</label>
+        <div class="radio-group">
+          <label class="radio-option"><input type="radio" name="q12_1_insurance" value="yes"> Yes</label>
+          <label class="radio-option"><input type="radio" name="q12_1_insurance" value="no"> No</label>
+        </div>
+        <input type="text" name="q12_1_insurance_detail" placeholder="If yes, what is covered and who is the provider?">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">12.2</span>What are the top 3 risks to this farming project?</label>
+        <textarea name="q12_2_risks" placeholder="1. ...\n2. ...\n3. ..."></textarea>
+      </div>
+
+      <div class="inline-row">
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">12.3</span>Is the farm registered with any government agricultural body?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="q12_3_registered" value="yes"> Yes</label>
+            <label class="radio-option"><input type="radio" name="q12_3_registered" value="no"> No</label>
+          </div>
+        </div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">12.4</span>Are there any permits or licences required?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="q12_4_permits" value="yes"> Yes</label>
+            <label class="radio-option"><input type="radio" name="q12_4_permits" value="no"> No</label>
+          </div>
+          <input type="text" name="q12_4_permits_list" placeholder="If yes, list them">
+        </div>
+      </div>
+
+      <div class="inline-row">
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">12.5</span>Are workers covered by compensation?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="q12_5_worker_comp" value="yes"> Yes</label>
+            <label class="radio-option"><input type="radio" name="q12_5_worker_comp" value="no"> No</label>
+          </div>
+        </div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">12.6</span>What happens if a key partner withdraws from the project?</label>
+          <input type="text" name="q12_6_withdrawal" placeholder="e.g. Their share is bought out / project continues / no plan yet">
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">12.7</span>Is there a formal process for resolving partner disputes?</label>
+        <div class="radio-group">
+          <label class="radio-option"><input type="radio" name="q12_7_disputes" value="yes"> Yes</label>
+          <label class="radio-option"><input type="radio" name="q12_7_disputes" value="no"> No, we handle it informally</label>
+        </div>
+        <input type="text" name="q12_7_disputes_process" placeholder="If yes, describe how disputes are resolved">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">12.8</span>Has the project ever experienced a significant crop failure?</label>
+        <div class="radio-group">
+          <label class="radio-option"><input type="radio" name="q12_8_crop_failure" value="yes"> Yes</label>
+          <label class="radio-option"><input type="radio" name="q12_8_crop_failure" value="no"> No</label>
+        </div>
+        <input type="text" name="q12_8_crop_failure_detail" placeholder="If yes, briefly describe what happened and how it was handled">
+      </div>
+
+      <div class="inline-row">
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">12.9</span>Are there any outstanding loans related to this project?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="q12_9_loans" value="yes"> Yes</label>
+            <label class="radio-option"><input type="radio" name="q12_9_loans" value="no"> No</label>
+          </div>
+          <input type="text" name="q12_9_loans_detail" placeholder="If yes, lender name and amount">
+        </div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">12.10</span>What is the exit plan if the project ends?</label>
+          <input type="text" name="q12_10_exit_plan" placeholder="e.g. Sell land / sell equipment / no formal plan">
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION 13 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">Section 13</div>
+      <div class="section-title">Technology & Management System Needs</div>
+      <div class="section-desc">Help design the cloud-based system that will manage this project. No technical knowledge needed — just describe what you want to be able to do.</div>
+    </div>
+    <div class="section-body">
+
+      <div class="info-note amber">You do not need technical knowledge to answer these. Just describe what you want to be able to do or see on a phone or computer.</div>
+
+      <div class="inline-row">
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">13.1</span>Does anyone currently use a smartphone?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="q131" value="most"> Yes — most</label>
+            <label class="radio-option"><input type="radio" name="q131" value="some"> Some</label>
+            <label class="radio-option"><input type="radio" name="q131" value="few"> A few</label>
+            <label class="radio-option"><input type="radio" name="q131" value="no"> No</label>
+          </div>
+        </div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">13.2</span>Is there reliable mobile data on the farm?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="q132" value="yes"> Yes</label>
+            <label class="radio-option"><input type="radio" name="q132" value="partial"> Partial</label>
+            <label class="radio-option"><input type="radio" name="q132" value="no"> No</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">13.3</span>What language should the system be in primarily?</label>
+        <input type="text" name="q13_3_language" placeholder="e.g. English / Shona / both">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Who should be able to do each of the following in the system?</label>
+        <div class="field-hint">Write a name or role (e.g. "Site manager only" / "All partners" / "Investors only")</div>
+      </div>
+
+      <div class="inline-row">
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">13.4</span>Log expenses / purchases</label>
+          <input type="text" name="q13_4_expense_access" placeholder="Who can enter expenses?">
+        </div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">13.5</span>See financial summaries</label>
+          <input type="text" name="q13_5_summary_access" placeholder="Who can see the money summary?">
+        </div>
+      </div>
+
+      <div class="inline-row">
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">13.6</span>Add worker attendance</label>
+          <input type="text" name="q13_6_attendance_access" placeholder="Who records who showed up?">
+        </div>
+        <div class="field-group">
+          <label class="field-label"><span class="field-num">13.7</span>Should the on-site manager log harvests as they happen?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="q137" value="yes"> Yes</label>
+            <label class="radio-option"><input type="radio" name="q137" value="no"> No</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">13.8</span>Should investors receive automatic notifications or reports?</label>
+        <div class="radio-group">
+          <label class="radio-option"><input type="radio" name="q13_8_notifications" value="yes"> Yes</label>
+          <label class="radio-option"><input type="radio" name="q13_8_notifications" value="no"> No, they can check when they want</label>
+        </div>
+        <input type="text" name="q13_8_notifications_freq" placeholder="If yes, how often? (Weekly / after each harvest / monthly)">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Which of these features do you want in the system?</label>
+        <div class="check-group">
+          <label class="check-option"><input type="checkbox" name="f139"> Track buyers & sales</label>
+          <label class="check-option"><input type="checkbox" name="f1310"> Track input / inventory stock</label>
+          <label class="check-option"><input type="checkbox" name="f1311"> Manage worker wages / payroll</label>
+          <label class="check-option"><input type="checkbox" name="f1312"> Work offline (no internet needed)</label>
+          <label class="check-option"><input type="checkbox" name="fa"> Crop planting calendar</label>
+          <label class="check-option"><input type="checkbox" name="fb"> Photo uploads from the farm</label>
+          <label class="check-option"><input type="checkbox" name="fc"> Profit calculator after expenses</label>
+          <label class="check-option"><input type="checkbox" name="fd"> Partner profit share calculator</label>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">13.13</span>Are there features you have seen elsewhere you would want?</label>
+        <input type="text" name="q13_13_other_features" placeholder="Any apps or systems you have seen that had something useful?">
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">13.14</span>In your own words, describe what the perfect management system would let you do</label>
+        <div class="field-hint">From your phone, on the farm, or as an investor checking in remotely — what would you want to see and do?</div>
+        <textarea name="q13_14_perfect_system" style="min-height:120px" placeholder="e.g. As the site manager, I want to open the app, enter what we spent today and how many workers came in. Investors should be able to open it any time and see how much money has been spent and how much we earned from the last sale..."></textarea>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label"><span class="field-num">13.15</span>What is the single biggest pain point or problem that the system must solve first?</label>
+        <textarea name="q13_15_pain_point" placeholder="e.g. Investors don't trust the figures because nothing is written down / we don't know how much profit we made until months later / we can never remember what we spent on inputs..."></textarea>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION 14 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">Section 14</div>
+      <div class="section-title">Seasonal Activity Calendar</div>
+      <div class="section-desc">Tick which activities happen in which months. Leave blank if nothing happens that month.</div>
+    </div>
+    <div class="section-body">
+      <div style="overflow-x:auto;">
+        <table class="calendar-table">
+          <thead>
+            <tr>
+              <th>Month</th>
+              <th>Planting</th>
+              <th>Fert/Spray</th>
+              <th>Irrigation</th>
+              <th>Weeding</th>
+              <th>Harvest</th>
+              <th>Sales</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody id="calendarBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 15 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-number">Section 15</div>
+      <div class="section-title">Additional Notes & Anything Else</div>
+      <div class="section-desc">Extra context, concerns, ideas, corrections, or anything not covered above.</div>
+    </div>
+    <div class="section-body">
+      <div class="field-group">
+        <label class="field-label">Is there anything important about this project that the questions above did not ask about?</label>
+        <textarea name="q15_1_extra_notes" style="min-height:150px" placeholder="Write anything you think is important for building the management system. There are no wrong answers here — any detail helps..."></textarea>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Any concerns or worries you want to flag to Sean?</label>
+        <textarea name="q15_2_concerns" placeholder="e.g. Concerns about privacy / things you want to discuss in person / anything you are unsure about..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="thankyou-box">
+    <h2>🌱 Thank You!</h2>
+    <p>Your answers will be used to design a management system that protects everyone's investment and makes the farm easier to run. Please tap the button below to save your answers, then send the confirmation to Sean.</p>
+  </div>
+
+  <div class="submit-area">
+    <button type="submit" class="btn-submit">Save All Answers — Form 3 ✓</button>
+    <p class="done-note">That's all 3 forms complete! 🎉<br>Sean will use your answers to start building the system.</p>
+  </div>
+
+  <div class="footer">
+    🌾 Farm Project Management System · Form 3 of 3<br>
+    Your answers are used only to build a better management system for everyone.
+  </div>
+
+  </form>
+
+</div>
+
+<script>
+const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const activities = ['planting', 'fert', 'irrigation', 'weeding', 'harvest', 'sales'];
+const tbody = document.getElementById('calendarBody');
+months.forEach((m, mi) => {
+  const tr = document.createElement('tr');
+  tr.innerHTML = `<td>${m}</td>` +
+    activities.map((a, ai) => `<td style="text-align:center"><input type="checkbox" name="cal_${m.toLowerCase()}_${a}" style="width:16px;height:16px;accent-color:#2d6a4f;border:none;background:none;box-shadow:none;padding:0"></td>`).join('') +
+    `<td><input type="text" name="cal_${m.toLowerCase()}_notes" placeholder="e.g. Main planting season" style="min-width:80px"></td>`;
+  tbody.appendChild(tr);
+});
+
+function handleSubmit() {
+  const inputs = document.querySelectorAll('input[type="text"], input[type="date"], textarea');
+  let filled = 0;
+  inputs.forEach(i => { if (i.value.trim()) filled++; });
+  const pct = Math.round((filled / inputs.length) * 100);
+  if (pct < 20) {
+    alert('Please fill in more answers before saving. Try to answer as many questions as you can.');
+    return;
+  }
+  const btn = document.querySelector('.btn-submit');
+  btn.textContent = '✅ All Done! Send confirmation to Sean.';
+  btn.style.background = '#1a3a2a';
+  btn.disabled = true;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  alert('Thank you for completing all 3 forms! Please send a screenshot or message to Sean to confirm you are done.');
+}
+</script>
+</body>
+</html>
