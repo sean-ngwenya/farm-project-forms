@@ -94,7 +94,7 @@
 </div>
 
 <div class="container">
-<form id="farmForm3" action="https://formspree.io/f/meerbbjz" method="POST">
+<form id="farmForm3" action="https://script.google.com/macros/s/AKfycby7_3sGWaFTiLs6DQ1XP_4S1MK0GvYcfPTTO4NZdMAGpzo6kIbFmuB6cpE0VTCGxU8LJA/exec" method="POST">
     <input type="hidden" name="_next" value="https://sean-ngwenya.github.io/farm-project-forms/index.html">
 
   <div class="respondent-card">
@@ -739,15 +739,13 @@ const form = document.getElementById('farmForm3');
     btn.textContent = 'Saving Final Answers... ⏳';
     btn.disabled = true;
 
-    const data = new FormData(form);
+   const data = new URLSearchParams(new FormData(form));
 
     try {
       const response = await fetch(form.action, {
         method: form.method,
-        body: data,
-        headers: {
-            'Accept': 'application/json'
-        }
+        body: data
+        // Removed the headers section
       });
 
       if (response.ok) {
