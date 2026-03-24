@@ -709,23 +709,5 @@
   </form>
 
 </div>
-
-<script>
-function handleSubmit() {
-  const inputs = document.querySelectorAll('input[type="text"], input[type="date"], textarea');
-  let filled = 0;
-  inputs.forEach(i => { if (i.value.trim()) filled++; });
-  const pct = Math.round((filled / inputs.length) * 100);
-  if (pct < 25) {
-    alert('Please fill in more answers before saving. Try to answer as many questions as you can.');
-    return;
-  }
-  const btn = document.querySelector('.btn-submit');
-  btn.textContent = '✅ Answers Saved! Send this to Sean.';
-  btn.style.background = '#5a3520';
-  btn.disabled = true;
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-</script>
 </body>
 </html>
