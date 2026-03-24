@@ -717,7 +717,10 @@
   </form>
 
 </div>
-  <script>
+<script>
+// ==========================================
+// 1. CALENDAR GENERATION (Kept safely intact!)
+// ==========================================
 const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 const activities = ['planting', 'fert', 'irrigation', 'weeding', 'harvest', 'sales'];
 const tbody = document.getElementById('calendarBody');
@@ -729,43 +732,43 @@ months.forEach((m, mi) => {
   tbody.appendChild(tr);
 });
 
+// ==========================================
+// 2. GOOGLE SHEETS SUBMISSION LOGIC
+// ==========================================
 const form = document.getElementById('farmForm3');
-  const btn = document.querySelector('.btn-submit');
+const btn = document.querySelector('.btn-submit');
 
-  form.addEventListener('submit', async function(event) {
-    event.preventDefault(); // Stop standard Formspree redirect
+form.addEventListener('submit', async function(event) {
+  event.preventDefault(); // Stop the browser from leaving the page
 
-    // Visual feedback
-    btn.textContent = 'Saving Final Answers... ⏳';
-    btn.disabled = true;
+  // Visual feedback
+  btn.textContent = 'Saving Final Answers... ⏳';
+  btn.disabled = true;
 
-   const data = new URLSearchParams(new FormData(form));
+  // Format the data for Google Apps Script
+  const data = new URLSearchParams(new FormData(form));
 
-    try {
-      const response = await fetch(form.action, {
-        method: form.method,
-        body: data
-        // Removed the headers section
-      });
+  try {
+    // Send the data silently using 'no-cors'
+    await fetch(form.action, {
+      method: form.method,
+      body: data,
+      mode: 'no-cors' 
+    });
 
-      if (response.ok) {
-        // The Final Success Message
-        btn.textContent = '✅ All 3 Forms Complete! You can close this page.';
-        btn.style.background = '#1a3a2a'; // Dark green to match Form 3
-        
-        // Optional: Scroll to the thank you box so they see it
-        document.querySelector('.thankyou-box').scrollIntoView({ behavior: 'smooth' });
-      } else {
-        alert('Oops! There was a problem saving your form. Please check your connection.');
-        btn.textContent = 'Save All Answers — Form 3 ✓';
-        btn.disabled = false;
-      }
-    } catch (error) {
-      alert('Network error. Please try again.');
-      btn.textContent = 'Save All Answers — Form 3 ✓';
-      btn.disabled = false;
-    }
-  });
+    // The silent send finished! Final Success Message
+    btn.textContent = '✅ All 3 Forms Complete! You can close this page.';
+    btn.style.background = '#1a3a2a'; // Dark green to match Form 3
+    
+    // Scroll to the thank you box so they see it
+    document.querySelector('.thankyou-box').scrollIntoView({ behavior: 'smooth' });
+
+  } catch (error) {
+    alert('Network error. Please check your connection and try again.');
+    btn.textContent = 'Save All Answers — Form 3 ✓';
+    btn.disabled = false;
+  }
+});
 </script>
 </body>
 </html>
