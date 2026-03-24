@@ -732,12 +732,12 @@
     btn.disabled = true;
 
    const data = new URLSearchParams(new FormData(form));
-
-    try {
-      const response = await fetch(form.action, {
+      try {
+      // 1. Add 'no-cors' to tell the browser this is a safe cross-origin request
+      await fetch(form.action, {
         method: form.method,
-        body: data
-        // Removed the headers section
+        body: data,
+        mode: 'no-cors' 
       });
 
       if (response.ok) {
