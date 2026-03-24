@@ -708,39 +708,36 @@
   </form>
 
 </div>
-  <script>
-  const form = document.getElementById('farmForm2');
+<script>
+  const form = document.getElementById('farmForm');
   const btn = document.querySelector('.btn-submit');
 
   form.addEventListener('submit', async function(event) {
-    event.preventDefault(); // Stop standard Formspree redirect
+    // 1. THIS is the magic line that stops the browser from leaving the page
+    event.preventDefault(); 
 
-    // Visual feedback
+    // 2. Visual feedback
     btn.textContent = 'Saving... Please wait ⏳';
     btn.disabled = true;
 
-   const data = new URLSearchParams(new FormData(form));
+    // 3. Format the data for Google Apps Script
+    const data = new URLSearchParams(new FormData(form));
 
     try {
-      const response = await fetch(form.action, {
+      // 4. Send the data silently in the background
+      await fetch(form.action, {
         method: form.method,
-        body: data
-        // Removed the headers section
+        body: data,
+        mode: 'no-cors' 
       });
 
-      if (response.ok) {
-        btn.textContent = '✅ Saved! Loading final form...';
-        btn.style.background = '#5a3520'; // Matches Form 2's theme
-        
-        // The Magic Redirect: Instantly loads Form 3
-        window.location.href = 'farm-form-3.html'; 
-      } else {
-        alert('Oops! There was a problem saving your form. Please check your connection.');
-        btn.textContent = 'Save My Answers — Form 2 ✓';
-        btn.disabled = false;
-      }
+      // 5. The silent send finished, so we redirect!
+      btn.textContent = '✅ Saved! Loading next form...';
+      btn.style.background = '#2d6a4f';
+      window.location.href = 'farm-form-3.html'; 
+
     } catch (error) {
-      alert('Network error. Please try again.');
+      alert('Network error. Please check your connection and try again.');
       btn.textContent = 'Save My Answers — Form 2 ✓';
       btn.disabled = false;
     }
