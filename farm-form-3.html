@@ -718,35 +718,5 @@
   </form>
 
 </div>
-
-<script>
-const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-const activities = ['planting', 'fert', 'irrigation', 'weeding', 'harvest', 'sales'];
-const tbody = document.getElementById('calendarBody');
-months.forEach((m, mi) => {
-  const tr = document.createElement('tr');
-  tr.innerHTML = `<td>${m}</td>` +
-    activities.map((a, ai) => `<td style="text-align:center"><input type="checkbox" name="cal_${m.toLowerCase()}_${a}" style="width:16px;height:16px;accent-color:#2d6a4f;border:none;background:none;box-shadow:none;padding:0"></td>`).join('') +
-    `<td><input type="text" name="cal_${m.toLowerCase()}_notes" placeholder="e.g. Main planting season" style="min-width:80px"></td>`;
-  tbody.appendChild(tr);
-});
-
-function handleSubmit() {
-  const inputs = document.querySelectorAll('input[type="text"], input[type="date"], textarea');
-  let filled = 0;
-  inputs.forEach(i => { if (i.value.trim()) filled++; });
-  const pct = Math.round((filled / inputs.length) * 100);
-  if (pct < 20) {
-    alert('Please fill in more answers before saving. Try to answer as many questions as you can.');
-    return;
-  }
-  const btn = document.querySelector('.btn-submit');
-  btn.textContent = '✅ All Done! Send confirmation to Sean.';
-  btn.style.background = '#1a3a2a';
-  btn.disabled = true;
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-  alert('Thank you for completing all 3 forms! Please send a screenshot or message to Sean to confirm you are done.');
-}
-</script>
 </body>
 </html>
