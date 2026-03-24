@@ -710,7 +710,7 @@
   </div>
 
   <div class="submit-area">
-    <button class="btn-submit" onclick="handleSubmit()">Save My Answers — Form 1 ✓</button>
+    <button type="submit" class="btn-submit">Save My Answers — Form 1 ✓</button>
     <p class="next-note">After saving, Sean will send you <strong>Form 2</strong> which covers the farm itself — crops, land, workers, and planting.</p>
   </div>
 
@@ -720,25 +720,5 @@
   </div>
 </form>
 </div>
-
-<script>
-function handleSubmit() {
-  const inputs = document.querySelectorAll('input[type="text"], input[type="date"], textarea');
-  let filled = 0;
-  inputs.forEach(i => { if (i.value.trim()) filled++; });
-  const pct = Math.round((filled / inputs.length) * 100);
-  if (pct < 30) {
-    alert('Please fill in more answers before saving. Try to answer as many questions as you can.');
-    return;
-  }
-  const btn = document.querySelector('.btn-submit');
-  btn.textContent = '✅ Answers Saved! Send this to Sean.';
-  btn.style.background = '#2d6a4f';
-  btn.disabled = true;
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-  // In a real deployment this would POST to a server
-  console.log('Form 1 submitted. ' + pct + '% filled.');
-}
-</script>
 </body>
 </html>
