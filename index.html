@@ -720,53 +720,36 @@
   </div>
 </form>
 </div>
-  <script>
+<script>
   const form = document.getElementById('farmForm');
   const btn = document.querySelector('.btn-submit');
 
   form.addEventListener('submit', async function(event) {
-    event.preventDefault(); // Stops Formspree's default page from loading
+    // 1. THIS is the magic line that stops the browser from leaving the page
+    event.preventDefault(); 
 
-    // Visual feedback so they know it's working
+    // 2. Visual feedback
     btn.textContent = 'Saving... Please wait ⏳';
     btn.disabled = true;
 
-   const data = new URLSearchParams(new FormData(form));
-     try {
-      // 1. Add 'no-cors' to tell the browser this is a safe cross-origin request
+    // 3. Format the data for Google Apps Script
+    const data = new URLSearchParams(new FormData(form));
+
+    try {
+      // 4. Send the data silently in the background
       await fetch(form.action, {
         method: form.method,
         body: data,
         mode: 'no-cors' 
       });
 
-      // 2. Because of 'no-cors', Google won't let us read the exact response,
-      // so if it didn't throw an error, we can safely assume it worked!
+      // 5. The silent send finished, so we redirect!
       btn.textContent = '✅ Saved! Loading next form...';
       btn.style.background = '#2d6a4f';
-      
-      // Load Form 2
       window.location.href = 'farm-form-2.html'; 
 
     } catch (error) {
-      alert('Network error. Please try again.');
-      btn.textContent = 'Save My Answers — Form 1 ✓';
-      btn.disabled = false;
-    }
-
-      if (response.ok) {
-        btn.textContent = '✅ Saved! Loading next form...';
-        btn.style.background = '#2d6a4f';
-        
-        // The Magic Redirect: Instantly loads Form 2
-        window.location.href = 'farm-form-2.html'; 
-      } else {
-        alert('Oops! There was a problem saving your form. Please check your connection.');
-        btn.textContent = 'Save My Answers — Form 1 ✓';
-        btn.disabled = false;
-      }
-    } catch (error) {
-      alert('Network error. Please try again.');
+      alert('Network error. Please check your connection and try again.');
       btn.textContent = 'Save My Answers — Form 1 ✓';
       btn.disabled = false;
     }
