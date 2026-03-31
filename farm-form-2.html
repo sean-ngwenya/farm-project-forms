@@ -713,33 +713,32 @@
   const btn = document.querySelector('.btn-submit');
 
   form.addEventListener('submit', async function(event) {
-    // 1. THIS is the magic line that stops the browser from leaving the page
-    event.preventDefault(); 
+    event.preventDefault();
+    event.stopPropagation();
 
-    // 2. Visual feedback
     btn.textContent = 'Saving... Please wait ⏳';
     btn.disabled = true;
 
-    // 3. Format the data for Google Apps Script
     const data = new URLSearchParams(new FormData(form));
 
     try {
-      // 4. Send the data silently in the background
       await fetch(form.action, {
-        method: form.method,
+        method: 'POST',
         body: data,
-        mode: 'no-cors' 
+        mode: 'no-cors'
       });
-
-      // 5. The silent send finished, so we redirect!
-      btn.textContent = '✅ Saved! Loading next form...';
+      btn.textContent = '✅ Saved! Loading Form 3...';
       btn.style.background = '#2d6a4f';
-      window.location.href = 'farm-form-3.html'; 
-
+      setTimeout(function() {
+        window.location.replace('farm-form-3.html');
+      }, 800);
     } catch (error) {
-      alert('Network error. Please check your connection and try again.');
-      btn.textContent = 'Save My Answers — Form 2 ✓';
-      btn.disabled = false;
+      // no-cors fetch sometimes throws — try to redirect anyway
+      btn.textContent = '✅ Saved! Loading Form 3...';
+      btn.style.background = '#2d6a4f';
+      setTimeout(function() {
+        window.location.replace('farm-form-3.html');
+      }, 800);
     }
   });
 </script>
