@@ -742,7 +742,9 @@ btn.addEventListener('click', async function(e) {
   e.preventDefault();
   e.stopPropagation();
 
-  btn.textContent = 'Saving Final Answers... ⏳';
+  // Step 1 — show saving state immediately (same as Form 1)
+  btn.textContent = 'Saving... Please wait ⏳';
+  btn.style.background = '#2d5a3e';
   btn.disabled = true;
 
   const data = new URLSearchParams(new FormData(form));
@@ -757,12 +759,12 @@ btn.addEventListener('click', async function(e) {
     // no-cors often throws even on success — continue anyway
   }
 
-  // Always show success
-  btn.textContent = '✅ All 3 Forms Complete! You can close this page.';
+  // Step 2 — show final success state (same as Form 1 pattern)
+  btn.textContent = '✅ All Saved! All 3 Forms Complete.';
   btn.style.background = '#1a3a2a';
   setTimeout(function() {
     document.querySelector('.thankyou-box').scrollIntoView({ behavior: 'smooth' });
-  }, 300);
+  }, 400);
 });
 </script>
 </body>

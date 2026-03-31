@@ -717,10 +717,11 @@
     e.preventDefault();
     e.stopPropagation();
 
+    // Step 1 — show saving state immediately (same as Form 1)
     btn.textContent = 'Saving... Please wait ⏳';
+    btn.style.background = '#a0522d';
     btn.disabled = true;
 
-    // Collect ALL form data
     const data = new URLSearchParams(new FormData(form));
 
     try {
@@ -733,12 +734,12 @@
       // no-cors often throws even on success — continue anyway
     }
 
-    // Always redirect after attempt
-    btn.textContent = '✅ Saved! Loading Form 3...';
+    // Step 2 — show saved state, then redirect (same as Form 1)
+    btn.textContent = '✅ Saved! Loading next form...';
     btn.style.background = '#2d6a4f';
     setTimeout(function() {
       window.location.replace('farm-form-3.html');
-    }, 1000);
+    }, 1200);
   });
 </script>
 </body>
