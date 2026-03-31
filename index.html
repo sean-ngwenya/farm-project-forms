@@ -277,16 +277,16 @@
     <div class="full">
       <div class="field-group">
         <label class="field-label">Your Full Name</label>
-        <input type="text" placeholder="Enter your name">
+        <input type="text" name="respondent_name" placeholder="Enter your name">
       </div>
     </div>
     <div class="field-group">
       <label class="field-label">Your Role in This Project</label>
-      <input type="text" placeholder="e.g. Site Manager, Investor">
+<input type="text" name="respondent_role" placeholder="e.g. Site Manager, Investor">
     </div>
     <div class="field-group">
       <label class="field-label">Date Completed</label>
-      <input type="date">
+      <input type="date" name="respondent_date">
     </div>
   </div>
 
@@ -301,17 +301,17 @@
 
       <div class="field-group">
         <label class="field-label"><span class="field-num">1.1</span>Official or working name of this project / farm</label>
-        <input type="text" placeholder="e.g. Zvimba Farm Project">
+        <input type="text" name="q1_1_farm_name" placeholder="e.g. Zvimba Farm Project">
       </div>
 
       <div class="field-group">
         <label class="field-label"><span class="field-num">1.2</span>Physical location / address of the farm</label>
-        <input type="text" placeholder="Village, district, province">
+        <input type="text" name="q1_2_location" placeholder="Village, district, province">
       </div>
 
       <div class="field-group">
         <label class="field-label"><span class="field-num">1.3</span>Total land area</label>
-        <input type="text" placeholder="e.g. 5 hectares or 12 acres">
+        <input type="text" name="q1_3_land_area" placeholder="e.g. 5 hectares or 12 acres">
       </div>
 
       <div class="field-group">
@@ -321,17 +321,17 @@
           <label class="radio-option"><input type="radio" name="q14" value="no"> No</label>
         </div>
         <div class="field-hint">If Yes, what is the name?</div>
-        <input type="text" placeholder="Registered name (if any)">
+        <input type="text" name="q1_4_registered_name" placeholder="Registered name (if any)">
       </div>
 
       <div class="inline-row">
         <div class="field-group">
           <label class="field-label"><span class="field-num">1.5</span>When did this project start?</label>
-          <input type="text" placeholder="Month & year (e.g. March 2023)">
+          <input type="text" name="q1_5_start_date" placeholder="Month & year (e.g. March 2023)">
         </div>
         <div class="field-group">
           <label class="field-label"><span class="field-num">1.6</span>Expected end date or duration</label>
-          <input type="text" placeholder="e.g. Ongoing / Dec 2026">
+          <input type="text" name="q1_6_end_date" placeholder="e.g. Ongoing / Dec 2026">
         </div>
       </div>
 
@@ -343,7 +343,7 @@
           <label class="radio-option"><input type="radio" name="q17" value="both"> Both</label>
           <label class="radio-option"><input type="radio" name="q17" value="other"> Other</label>
         </div>
-        <input type="text" placeholder="Explain further if needed">
+        <input type="text" name="q1_7_goal_explain" placeholder="Explain further if needed">
       </div>
 
       <div class="field-group">
@@ -357,7 +357,7 @@
 
       <div class="field-group">
         <label class="field-label"><span class="field-num">1.9</span>Briefly describe what the farm produces and its overall vision</label>
-        <textarea placeholder="List the crops grown and describe what the farm is trying to achieve in the long term..."></textarea>
+        <textarea name="q1_9_vision" placeholder="List the crops grown and describe what the farm is trying to achieve in the long term..."></textarea>
       </div>
 
     </div>
@@ -379,11 +379,11 @@
         <div class="partner-label">👤 Person 1</div>
         <div class="field-group">
           <label class="field-label"><span class="field-num">2.1.1</span>Full name</label>
-          <input type="text" placeholder="Full name">
+          <input type="text" name="p1_1_name" placeholder="Full name">
         </div>
         <div class="field-group">
-          <label class="field-label"><span class="field-num">2.1.2</span>Role / title in this project</label>
-          <input type="text" placeholder="e.g. Site Manager, Investor">
+<label class="field-label"><span class="field-num">2.1.2</span>Role / title in this project</label>
+          <input type="text" name="p1_2_role" placeholder="e.g. Site Manager, Investor">
         </div>
         <div class="field-group">
           <label class="field-label"><span class="field-num">2.1.3</span>Type of involvement</label>
@@ -397,17 +397,17 @@
         <div class="inline-row">
           <div class="field-group">
             <label class="field-label"><span class="field-num">2.1.4</span>Amount invested / contributed</label>
-            <input type="text" placeholder="e.g. $500 / land / labour">
+            <input type="text" name="p1_4_investment" placeholder="e.g. $500 / land / labour">
           </div>
           <div class="field-group">
             <label class="field-label"><span class="field-num">2.1.5</span>Profit-share %</label>
-            <input type="text" placeholder="e.g. 33%">
+            <input type="text" name="p1_5_profit_share" placeholder="e.g. 33%">
           </div>
         </div>
         <div class="inline-row">
           <div class="field-group">
             <label class="field-label"><span class="field-num">2.1.6</span>Phone / contact</label>
-            <input type="text" placeholder="Phone number">
+            <input type="text" name="p1_6_phone" placeholder="Phone number">
           </div>
           <div class="field-group">
             <label class="field-label"><span class="field-num">2.1.7</span>Location</label>
@@ -419,11 +419,11 @@
         </div>
         <div class="field-group">
           <label class="field-label"><span class="field-num">2.1.8</span>Decisions this person can make alone</label>
-          <textarea placeholder="e.g. Hire casual workers, buy inputs under $50..."></textarea>
+          <textarea name="p1_8_independent_decisions" placeholder="e.g. Hire casual workers, buy inputs under $50..."></textarea>
         </div>
         <div class="field-group">
           <label class="field-label"><span class="field-num">2.1.9</span>Decisions that require group approval</label>
-          <textarea placeholder="e.g. Large purchases, changing crops, distributing profits..."></textarea>
+          <textarea name="p1_9_group_decisions" placeholder="e.g. Large purchases, changing crops, distributing profits..."></textarea>
         </div>
       </div>
 
@@ -432,11 +432,11 @@
         <div class="partner-label">👤 Person 2</div>
         <div class="field-group">
           <label class="field-label"><span class="field-num">2.2.1</span>Full name</label>
-          <input type="text" placeholder="Full name">
+          <input type="text" name="p2_1_name" placeholder="Full name">
         </div>
         <div class="field-group">
           <label class="field-label"><span class="field-num">2.2.2</span>Role / title in this project</label>
-          <input type="text" placeholder="e.g. Investor, Co-founder">
+          <input type="text" name="p2_2_role" placeholder="e.g. Investor, Co-founder">
         </div>
         <div class="field-group">
           <label class="field-label"><span class="field-num">2.2.3</span>Type of involvement</label>
@@ -450,17 +450,17 @@
         <div class="inline-row">
           <div class="field-group">
             <label class="field-label"><span class="field-num">2.2.4</span>Amount invested / contributed</label>
-            <input type="text" placeholder="e.g. $500 / land / labour">
+            <input type="text" name="p2_4_investment" placeholder="e.g. $500 / land / labour">
           </div>
           <div class="field-group">
             <label class="field-label"><span class="field-num">2.2.5</span>Profit-share %</label>
-            <input type="text" placeholder="e.g. 33%">
+            <input type="text" name="p2_5_profit_share" placeholder="e.g. 33%">
           </div>
         </div>
         <div class="inline-row">
           <div class="field-group">
             <label class="field-label"><span class="field-num">2.2.6</span>Phone / contact</label>
-            <input type="text" placeholder="Phone number">
+            <input type="text" name="p2_6_phone" placeholder="Phone number">
           </div>
           <div class="field-group">
             <label class="field-label"><span class="field-num">2.2.7</span>Location</label>
@@ -472,11 +472,11 @@
         </div>
         <div class="field-group">
           <label class="field-label"><span class="field-num">2.2.8</span>Decisions this person can make alone</label>
-          <textarea placeholder="What can this person decide without consulting the others?"></textarea>
+          <textarea name="p2_8_independent_decisions" placeholder="What can this person decide without consulting the others?"></textarea>
         </div>
         <div class="field-group">
           <label class="field-label"><span class="field-num">2.2.9</span>Decisions that require group approval</label>
-          <textarea placeholder="What requires everyone to agree?"></textarea>
+          <textarea name="p2_9_group_decisions" placeholder="What requires everyone to agree?"></textarea>
         </div>
       </div>
 
@@ -485,11 +485,11 @@
         <div class="partner-label">👤 Person 3</div>
         <div class="field-group">
           <label class="field-label"><span class="field-num">2.3.1</span>Full name</label>
-          <input type="text" placeholder="Full name">
+          <input type="text" name="p3_1_name" placeholder="Full name">
         </div>
         <div class="field-group">
           <label class="field-label"><span class="field-num">2.3.2</span>Role / title in this project</label>
-          <input type="text" placeholder="e.g. Investor, Co-founder">
+          <input type="text" name="p3_2_role" placeholder="e.g. Investor, Co-founder">
         </div>
         <div class="field-group">
           <label class="field-label"><span class="field-num">2.3.3</span>Type of involvement</label>
@@ -503,17 +503,17 @@
         <div class="inline-row">
           <div class="field-group">
             <label class="field-label"><span class="field-num">2.3.4</span>Amount invested / contributed</label>
-            <input type="text" placeholder="e.g. $500 / land / labour">
+            <input type="text" name="p3_4_investment" placeholder="e.g. $500 / land / labour">
           </div>
           <div class="field-group">
             <label class="field-label"><span class="field-num">2.3.5</span>Profit-share %</label>
-            <input type="text" placeholder="e.g. 33%">
+            <input type="text" name="p3_5_profit_share" placeholder="e.g. 33%">
           </div>
         </div>
         <div class="inline-row">
           <div class="field-group">
             <label class="field-label"><span class="field-num">2.3.6</span>Phone / contact</label>
-            <input type="text" placeholder="Phone number">
+            <input type="text" name="p3_6_phone" placeholder="Phone number">
           </div>
           <div class="field-group">
             <label class="field-label"><span class="field-num">2.3.7</span>Location</label>
@@ -525,11 +525,11 @@
         </div>
         <div class="field-group">
           <label class="field-label"><span class="field-num">2.3.8</span>Decisions this person can make alone</label>
-          <textarea placeholder="What can this person decide without consulting the others?"></textarea>
+          <textarea name="p3_8_independent_decisions" placeholder="What can this person decide without consulting the others?"></textarea>
         </div>
         <div class="field-group">
           <label class="field-label"><span class="field-num">2.3.9</span>Decisions that require group approval</label>
-          <textarea placeholder="What requires everyone to agree?"></textarea>
+          <textarea name="p3_9_group_decisions" placeholder="What requires everyone to agree?"></textarea>
         </div>
       </div>
 
@@ -538,11 +538,11 @@
         <div class="partner-label">👤 Person 4</div>
         <div class="field-group">
           <label class="field-label"><span class="field-num">2.4.1</span>Full name</label>
-          <input type="text" placeholder="Full name">
+          <input type="text" name="p4_1_name" placeholder="Full name">
         </div>
         <div class="field-group">
           <label class="field-label"><span class="field-num">2.4.2</span>Role / title in this project</label>
-          <input type="text" placeholder="e.g. Investor, Overseer">
+          <input type="text" name="p4_2_role" placeholder="e.g. Investor, Overseer">
         </div>
         <div class="field-group">
           <label class="field-label"><span class="field-num">2.4.3</span>Type of involvement</label>
@@ -556,17 +556,17 @@
         <div class="inline-row">
           <div class="field-group">
             <label class="field-label"><span class="field-num">2.4.4</span>Amount invested / contributed</label>
-            <input type="text" placeholder="e.g. $500 / land / labour">
+            <input type="text" name="p4_4_investment" placeholder="e.g. $500 / land / labour">
           </div>
           <div class="field-group">
             <label class="field-label"><span class="field-num">2.4.5</span>Profit-share %</label>
-            <input type="text" placeholder="e.g. 33%">
+            <input type="text" name="p4_5_profit_share" placeholder="e.g. 33%">
           </div>
         </div>
         <div class="inline-row">
           <div class="field-group">
             <label class="field-label"><span class="field-num">2.4.6</span>Phone / contact</label>
-            <input type="text" placeholder="Phone number">
+            <input type="text" name="p4_6_phone" placeholder="Phone number">
           </div>
           <div class="field-group">
             <label class="field-label"><span class="field-num">2.4.7</span>Location</label>
@@ -578,17 +578,17 @@
         </div>
         <div class="field-group">
           <label class="field-label"><span class="field-num">2.4.8</span>Decisions this person can make alone</label>
-          <textarea placeholder="What can this person decide without consulting the others?"></textarea>
+          <textarea name="p4_8_independent_decisions" placeholder="What can this person decide without consulting the others?"></textarea>
         </div>
         <div class="field-group">
           <label class="field-label"><span class="field-num">2.4.9</span>Decisions that require group approval</label>
-          <textarea placeholder="What requires everyone to agree?"></textarea>
+          <textarea name="p4_9_group_decisions" placeholder="What requires everyone to agree?"></textarea>
         </div>
       </div>
 
       <div class="field-group">
         <label class="field-label"><span class="field-num">2.5</span>Describe in your own words who is in charge of what, and how decisions get made when partners disagree</label>
-        <textarea placeholder="e.g. The site manager decides day-to-day. Big money decisions need all investors to agree. If we disagree, the majority wins..."></textarea>
+        <textarea name="q2_5_decision_making" placeholder="e.g. The site manager decides day-to-day. Big money decisions need all investors to agree. If we disagree, the majority wins..."></textarea>
       </div>
 
     </div>
@@ -606,11 +606,11 @@
       <div class="inline-row">
         <div class="field-group">
           <label class="field-label"><span class="field-num">3.1</span>Total capital invested so far (all partners)</label>
-          <input type="text" placeholder="e.g. USD $2,000 / ZWL 50,000">
+          <input type="text" name="q3_1_capital" placeholder="e.g. USD $2,000 / ZWL 50,000">
         </div>
         <div class="field-group">
           <label class="field-label"><span class="field-num">3.2</span>Currency used for accounting</label>
-          <input type="text" placeholder="e.g. USD, ZWL, both">
+          <input type="text" name="q3_2_currency" placeholder="e.g. USD, ZWL, both">
         </div>
       </div>
 
@@ -625,7 +625,7 @@
 
       <div class="field-group">
         <label class="field-label"><span class="field-num">3.4</span>Where is the partnership agreement stored?</label>
-        <input type="text" placeholder="e.g. Paper copy with Partner X / WhatsApp message / not written">
+        <input type="text" name="q3_4_agreement_location" placeholder="e.g. Paper copy with Partner X / WhatsApp message / not written">
       </div>
 
       <div class="field-group">
@@ -634,17 +634,17 @@
           <label class="radio-option"><input type="radio" name="q35" value="yes"> Yes</label>
           <label class="radio-option"><input type="radio" name="q35" value="no"> No</label>
         </div>
-        <input type="text" placeholder="If Yes, which bank?">
+        <input type="text" name="q3_5_bank_name" placeholder="If Yes, which bank?">
       </div>
 
       <div class="field-group">
         <label class="field-label"><span class="field-num">3.6</span>Who controls / has access to the project bank account?</label>
-        <input type="text" placeholder="Name(s) of people with access">
+        <input type="text" name="q3_6_account_access" placeholder="Name(s) of people with access">
       </div>
 
       <div class="field-group">
         <label class="field-label"><span class="field-num">3.7</span>Who approves large expenditures, and above what amount?</label>
-        <input type="text" placeholder="e.g. Any expense above $100 needs all partners to agree">
+        <input type="text" name="q3_7_expenditure_approval" placeholder="e.g. Any expense above $100 needs all partners to agree">
       </div>
 
       <div class="field-group">
@@ -659,7 +659,7 @@
 
       <div class="field-group">
         <label class="field-label"><span class="field-num">3.9</span>How are profits distributed?</label>
-        <input type="text" placeholder="e.g. Equal 3-way split / proportional to investment / other">
+        <input type="text" name="q3_9_profit_distribution" placeholder="e.g. Equal 3-way split / proportional to investment / other">
       </div>
 
       <div class="field-group">
@@ -669,12 +669,12 @@
           <label class="radio-option"><input type="radio" name="q310" value="annual"> Annually</label>
           <label class="radio-option"><input type="radio" name="q310" value="other"> Other</label>
         </div>
-        <input type="text" placeholder="Explain if other">
+        <input type="text" name="q3_10_profit_timing_explain" placeholder="Explain if other">
       </div>
 
       <div class="field-group">
         <label class="field-label"><span class="field-num">3.11</span>Who is responsible for paying farm workers / suppliers?</label>
-        <input type="text" placeholder="Name or role of the person who makes payments">
+        <input type="text" name="q3_11_payer" placeholder="Name or role of the person who makes payments">
       </div>
 
       <div class="field-group">
@@ -683,12 +683,12 @@
           <label class="radio-option"><input type="radio" name="q312" value="yes"> Yes</label>
           <label class="radio-option"><input type="radio" name="q312" value="no"> No</label>
         </div>
-        <input type="text" placeholder="If Yes, what percentage is kept back?">
+        <input type="text" name="q3_12_retained_percentage" placeholder="If Yes, what percentage is kept back?">
       </div>
 
       <div class="field-group">
         <label class="field-label"><span class="field-num">3.13</span>How are unexpected costs (e.g. crop failure, equipment breakdown) handled?</label>
-        <textarea placeholder="e.g. Each partner tops up equally / draw from reserves / take a loan..."></textarea>
+        <textarea name="q3_13_unexpected_costs" placeholder="e.g. Each partner tops up equally / draw from reserves / take a loan..."></textarea>
       </div>
 
       <div class="field-group">
@@ -697,13 +697,13 @@
           <label class="radio-option"><input type="radio" name="q314" value="yes"> Yes</label>
           <label class="radio-option"><input type="radio" name="q314" value="no"> No</label>
         </div>
-        <input type="text" placeholder="If Yes, who and how much?">
+        <input type="text" name="q3_14_management_fee" placeholder="If Yes, who and how much?">
       </div>
 
       <div class="field-group">
         <label class="field-label"><span class="field-num">3.15</span>Describe the full profit-sharing arrangement in as much detail as possible</label>
         <div class="field-hint">Include: what deductions come first, at what frequency profits are paid out, and how disputes over money are settled.</div>
-        <textarea style="min-height:120px" placeholder="e.g. After every harvest, we first subtract all expenses. From the remaining profit, 10% goes back into the farm fund. The rest is split: 40% to Investor A, 40% to Investor B, 20% to the site manager as his share and payment for labour..."></textarea>
+        <textarea name="q3_15_profit_sharing_detail" style="min-height:120px" placeholder="e.g. After every harvest, we first subtract all expenses. From the remaining profit, 10% goes back into the farm fund. The rest is split: 40% to Investor A, 40% to Investor B, 20% to the site manager as his share and payment for labour..."></textarea>
       </div>
 
     </div>
