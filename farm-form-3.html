@@ -738,37 +738,31 @@ months.forEach((m, mi) => {
 const form = document.getElementById('farmForm3');
 const btn = document.querySelector('.btn-submit');
 
-form.addEventListener('submit', async function(event) {
-  event.preventDefault(); // Stop the browser from leaving the page
+btn.addEventListener('click', async function(e) {
+  e.preventDefault();
+  e.stopPropagation();
 
-  // Visual feedback
   btn.textContent = 'Saving Final Answers... ⏳';
   btn.disabled = true;
 
-  // Format the data for Google Apps Script
   const data = new URLSearchParams(new FormData(form));
 
   try {
-    // Send the data silently using 'no-cors'
-    await fetch(form.action, {
-      method: form.method,
+    await fetch('https://script.google.com/macros/s/AKfycby7_3sGWaFTiLs6DQ1XP_4S1MK0GvYcfPTTO4NZdMAGpzo6kIbFmuB6cpE0VTCGxU8LJA/exec', {
+      method: 'POST',
       body: data,
-      mode: 'no-cors' 
+      mode: 'no-cors'
     });
-
-    // The silent send finished! Final Success Message
-    btn.textContent = '✅ All 3 Forms Complete! You can close this page.';
-    btn.style.background = '#1a3a2a'; // Dark green to match Form 3
-    
-    // Scroll to the thank you box so they see it
-    document.querySelector('.thankyou-box').scrollIntoView({ behavior: 'smooth' });
-
-  } catch (error) {
-    // no-cors often throws even on success — show done state anyway
-    btn.textContent = '✅ All 3 Forms Complete! You can close this page.';
-    btn.style.background = '#1a3a2a';
-    document.querySelector('.thankyou-box').scrollIntoView({ behavior: 'smooth' });
+  } catch(err) {
+    // no-cors often throws even on success — continue anyway
   }
+
+  // Always show success
+  btn.textContent = '✅ All 3 Forms Complete! You can close this page.';
+  btn.style.background = '#1a3a2a';
+  setTimeout(function() {
+    document.querySelector('.thankyou-box').scrollIntoView({ behavior: 'smooth' });
+  }, 300);
 });
 </script>
 </body>

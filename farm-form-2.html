@@ -709,37 +709,36 @@
 
 </div>
 <script>
-  const form = document.getElementById('farmForm');
+  // Fixed: correct form ID is farmForm2
+  const form = document.getElementById('farmForm2');
   const btn = document.querySelector('.btn-submit');
 
-  form.addEventListener('submit', async function(event) {
-    event.preventDefault();
-    event.stopPropagation();
+  btn.addEventListener('click', async function(e) {
+    e.preventDefault();
+    e.stopPropagation();
 
     btn.textContent = 'Saving... Please wait ⏳';
     btn.disabled = true;
 
+    // Collect ALL form data
     const data = new URLSearchParams(new FormData(form));
 
     try {
-      await fetch(form.action, {
+      await fetch('https://script.google.com/macros/s/AKfycby7_3sGWaFTiLs6DQ1XP_4S1MK0GvYcfPTTO4NZdMAGpzo6kIbFmuB6cpE0VTCGxU8LJA/exec', {
         method: 'POST',
         body: data,
         mode: 'no-cors'
       });
-      btn.textContent = '✅ Saved! Loading Form 3...';
-      btn.style.background = '#2d6a4f';
-      setTimeout(function() {
-        window.location.replace('farm-form-3.html');
-      }, 800);
-    } catch (error) {
-      // no-cors fetch sometimes throws — try to redirect anyway
-      btn.textContent = '✅ Saved! Loading Form 3...';
-      btn.style.background = '#2d6a4f';
-      setTimeout(function() {
-        window.location.replace('farm-form-3.html');
-      }, 800);
+    } catch(err) {
+      // no-cors often throws even on success — continue anyway
     }
+
+    // Always redirect after attempt
+    btn.textContent = '✅ Saved! Loading Form 3...';
+    btn.style.background = '#2d6a4f';
+    setTimeout(function() {
+      window.location.replace('farm-form-3.html');
+    }, 1000);
   });
 </script>
 </body>
